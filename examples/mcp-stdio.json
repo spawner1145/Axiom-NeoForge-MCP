@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "axiom": {
+      "command": "node",
+      "args": ["D:/code/Axiomdev/Axiom-NeoForge-MCP-1.21/bridge/axiom-mcp.mjs", "--host", "127.0.0.1", "--port", "8766"]
+    }
+  }
+}

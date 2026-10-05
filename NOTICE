@@ -1,0 +1,6 @@
+Axiom MCP 0.1.0, a standalone client add-on for the local Axiom NeoForge port.
+HTTP MCP transport, JVM scripting utilities, API introspection, NBT conversion
+and stdio bridge adapted from PhotonMCP-1.21 (Apache License 2.0).
+These files were modified for Axiom names, native API bindings and behavior.
+Groovy 4.0.28 is provided as a Jar-in-Jar dependency under Apache License 2.0.
+Axiom itself is a separately installed dependency and is not redistributed here.

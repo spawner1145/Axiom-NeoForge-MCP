@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+group = 'dev.axiommcp'
+version = '0.2.0'
+base { archivesName = 'axiom-mcp-neoforge-1.21.1' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+repositories { mavenCentral() }
+def axiomJar = file('../Axiom-NeoForge/build/libs/Axiom-6.1.3-neoforge-1.21.1-local.jar')
+neoForge {
+    version = '21.1.252'
+    mods { axiom_mcp { sourceSet sourceSets.main } }
+    runs { client { client(); gameDirectory = file('run') } }
+}
+configurations { embeddedGroovy }
+configurations.implementation.extendsFrom(configurations.embeddedGroovy)
+sourceSets.test.compileClasspath += sourceSets.main.compileClasspath
+sourceSets.test.runtimeClasspath += sourceSets.main.runtimeClasspath
+dependencies {
+    implementation files(axiomJar)
+    embeddedGroovy 'org.apache.groovy:groovy:4.0.28'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0'
+}
+jar {
+    from(configurations.embeddedGroovy) { into 'META-INF/jarjar' }
+    from('LICENSE', 'NOTICE')
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+test { useJUnitPlatform() }
+tasks.register('installMod') {
+    dependsOn jar
+    doLast {
+        def instance = file(gameDir).canonicalFile
+        def mods = new File(instance, 'mods').canonicalFile
+        def backup = new File(instance, 'mod-backups/axiom-mcp').canonicalFile
+        def artifact = tasks.jar.archiveFile.get().asFile
+        mods.mkdirs()
+        mods.listFiles().findAll { it.isFile() && it.name.startsWith('axiom-mcp-neoforge-1.21.1-') && it.name.endsWith('.jar') && it.name != artifact.name }.each { old ->
+            backup.mkdirs()
+            java.nio.file.Files.move(old.toPath(), new File(backup, "${System.currentTimeMillis()}-${old.name}").toPath())
+        }
+        copy { from artifact; into mods }
+    }
+}

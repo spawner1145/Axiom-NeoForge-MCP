@@ -1,0 +1,66 @@
+# Gradle caches and generated build output
+.gradle/
+.kotlin/
+build/
+out/
+bin/
+
+# Local Minecraft development / integration-test instances
+/run/
+/run-*/
+/logs/
+/crash-reports/
+/reports/
+
+# Per-world building sessions, captures, and MCP session data
+/creations/
+
+# Compiled binaries and packaged release artifacts
+*.jar
+*.zip
+*.class
+# The wrapper JAR is required to build from a clean checkout.
+!/gradle/wrapper/gradle-wrapper.jar
+
+# Python / Node tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+.npm/
+
+# IDE / editor files
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+*.iml
+*.ipr
+*.iws
+
+# Local configuration, logs, and scratch files
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local.properties
+*.log
+*.log.*
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+hs_err_pid*
+replay_pid*
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep examples/, tests/, src/, bridge/, tools/, and Gradle configuration.
